@@ -1,0 +1,9 @@
+com\example\dummyjson\config\WebClientConfig.class
+com\example\dummyjson\controller\ProductController.class
+com\example\dummyjson\dto\ProductListResponse.class
+com\example\dummyjson\controller\HealthController.class
+com\example\dummyjson\DummyJsonClientApplication.class
+com\example\dummyjson\service\ProductService.class
+com\example\dummyjson\service\ProductService$1.class
+com\example\dummyjson\config\DummyJsonConfig.class
+com\example\dummyjson\dto\Product.class

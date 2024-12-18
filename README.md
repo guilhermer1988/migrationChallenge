@@ -27,7 +27,7 @@ dummyjson-client
 │   │   │   └── com.example.dummyjsonclient
 │   │   │       ├── DummyJsonClientApplication.java
 │   │   │       ├── config
-│   │   │       │   └── RestTemplateConfig.java
+│   │   │       │   └── WebClientConfig.java
 │   │   │       ├── controller
 │   │   │       │   └── ProductController.java
 │   │   │       ├── dto
@@ -106,3 +106,33 @@ mvn clean test
 
 - Entregar o projeto em container será um diferencial.
 - Fica a critério do desenvolvedor inserir ou remover dependencias do projeto para garantir o objetivo do challenge.
+
+## DOCUMENTAÇÃO DO DESENVOLVIMENTO:
+- Os comandos de execução não foram alterados
+- O desenvolvimento seguiu a ordem dos requisitos de entrega
+
+1 - Atualização Java 17+ e Spring Boot 3.2.5
+- referências antigas do Java foram removidas e adicionadas:
+> <java.version>17</java.version>
+
+> <<groupId>org.springframework.boot</groupId>>
+> <<artifactId>spring-boot-starter-parent</artifactId>>
+> <<version>3.2.5</version>>
+
+
+2 - Substituir RestTemplate por WebClient ou Openfeign
+ - Openfeign não compatível.
+Escolhido WebClient, para isso foi necessário acrescentar: rg.springframework.boot
+refatorado métodos de busca para utilizar WebClient
+refatorado arquivo config para o novo tipo
+
+2 - Remover Junit4 e mockito
+ - removido: mockito; adicionado: EasyMock
+ - removido: junit4; adicionado: junit5
+ - Foi necessário alterar os testes unitários do Service e Controller
+
+3 - Deixar a URL da API dummyjson parametrizada por ambiente no projeto.
+ - Para cada ambiente Dev/Prod foi criado um arquivo .yml com a configuração adequada. Neste projeto, a mesma url está sendo usada para abos ambientes.
+
+4 - path /health que retorna a saude do microsserviço
+ - Criado uma nova controller com o método GET no qual responde Status: UP e dara e hora da chamada.

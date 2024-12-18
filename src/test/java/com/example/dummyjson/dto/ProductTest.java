@@ -1,13 +1,16 @@
 package com.example.dummyjson.dto;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 
-import javax.validation.constraints.NotNull;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@RunWith(MockitoJUnitRunner.class)
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest
 public class ProductTest {
 
     @Test
@@ -23,9 +26,9 @@ public class ProductTest {
         product1.setDescription("A dummy description");
         product1.setPrice(new Double("2.1"));
 
-        Assert.assertEquals(expectId, product1.getId());
-        Assert.assertEquals(expectedTitle, product1.getTitle());
-        Assert.assertEquals(expectedDescription, product1.getDescription());
-        Assert.assertEquals(expectedPrice, product1.getPrice());
+        assertEquals(expectId, product1.getId());
+        assertEquals(expectedTitle, product1.getTitle());
+        assertEquals(expectedDescription, product1.getDescription());
+        assertEquals(expectedPrice, product1.getPrice());
     }
 }

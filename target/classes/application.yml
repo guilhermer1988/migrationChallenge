@@ -1,0 +1,7 @@
+api:
+  dummyjson:
+    url: https://dummyjson.com
+
+spring:
+  profiles:
+    active: dev

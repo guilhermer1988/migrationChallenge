@@ -5,7 +5,9 @@ import com.example.dummyjson.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.web.reactive.function.client.WebClient;
+
 import java.util.List;
 
 @RestController
@@ -14,6 +16,11 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping
     public List<Product> getAllProducts() {

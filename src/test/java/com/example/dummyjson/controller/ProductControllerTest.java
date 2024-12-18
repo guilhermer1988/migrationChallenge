@@ -2,55 +2,79 @@ package com.example.dummyjson.controller;
 
 import com.example.dummyjson.dto.Product;
 import com.example.dummyjson.service.ProductService;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.reactive.function.client.WebClient;
 
-import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@SpringBootTest
 public class ProductControllerTest {
 
-    @InjectMocks
+    private static final String PRODUCT_1 = "Product 1";
+    private static final String PRODUCT_2 = "Product 2";
+    private static final long ID_1 = 1L;
+    private static final long ID_2 = 2L;
+
+    @Autowired
     private ProductController productController;
 
-    @Mock
+    @Autowired
     private ProductService productService;
+
+    @TestConfiguration
+    static class MockProductServiceConfig {
+
+        @Bean
+        public ProductService productService(WebClient.Builder builder) {
+            return new ProductService(builder.build()) {
+                @Override
+                public List<Product> getAllProducts() {
+                    Product product1 = new Product();
+                    product1.setId(ID_1);
+                    product1.setTitle(PRODUCT_1);
+
+                    Product product2 = new Product();
+                    product2.setId(ID_2);
+                    product2.setTitle(PRODUCT_2);
+
+                    return List.of(product1, product2);
+                }
+
+                @Override
+                public Product getProductById(Long id) {
+                    if (id == ID_1) {
+                        Product product1 = new Product();
+                        product1.setId(ID_1);
+                        product1.setTitle(PRODUCT_1);
+                        return product1;
+                    } else if (id == ID_2) {
+                        Product product2 = new Product();
+                        product2.setId(ID_2);
+                        product2.setTitle(PRODUCT_2);
+                        return product2;
+                    }
+                    return null;
+                }
+            };
+        }
+    }
 
     @Test
     public void testGetAllProducts() {
-        Product product1 = new Product();
-        product1.setId(1L);
-        product1.setTitle("Product 1");
-
-        Product product2 = new Product();
-        product2.setId(2L);
-        product2.setTitle("Product 2");
-
-        List<Product> products = Arrays.asList(product1, product2);
-        when(productService.getAllProducts()).thenReturn(products);
-
         List<Product> result = productController.getAllProducts();
         assertEquals(2, result.size());
-        assertEquals("Product 1", result.get(0).getTitle());
+        assertEquals(PRODUCT_1, result.get(0).getTitle());
     }
 
     @Test
     public void testGetProductById() {
-        Product product = new Product();
-        product.setId(1L);
-        product.setTitle("Product 1");
-
-        when(productService.getProductById(1L)).thenReturn(product);
-
         Product result = productController.getProductById(1L);
-        assertEquals("Product 1", result.getTitle());
+        assertEquals(PRODUCT_1, result.getTitle());
     }
 }
