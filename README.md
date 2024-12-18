@@ -127,7 +127,7 @@ refatorado métodos de busca para utilizar WebClient
 refatorado arquivo config para o novo tipo
 
 2 - Remover Junit4 e mockito
- - removido: mockito; adicionado: EasyMock
+ - removido: mockito; adicionado: SpringBootTest
  - removido: junit4; adicionado: junit5
  - Foi necessário alterar os testes unitários do Service e Controller
 
